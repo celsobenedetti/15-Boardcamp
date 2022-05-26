@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - checkout
-      - run: Cd into server:
+      - run: Cd into server
           name: Cd into server
           command: cd server
       - run: Install Yarn
