@@ -20,10 +20,10 @@ jobs:
 
     steps:
       - checkout
-      - run: Cd into server
+      - run:
           name: Cd into server
           command: cd server
-      - run: Install Yarn
+      - run:
           name: Install Yarn
           command: curl -o- -L https://yarnpkg.com/install.sh | bash
       - run:
