@@ -1,7 +1,10 @@
 import db from "./db";
+import app from "./app";
 
-const customerId = 1;
+const PORT = process.env.PORT;
 
-db.query("SELECT * FROM customers WHERE id=$1", [customerId]).then((res) =>
+db.query("SELECT * FROM customers WHERE id=$1", [1]).then((res) =>
   console.log(res)
 );
+
+app.listen(PORT, () => console.log(`Server listening on ${PORT}`));
