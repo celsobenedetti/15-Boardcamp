@@ -7,6 +7,6 @@ app.use(cors());
 app.use(helmet());
 app.use(json());
 
-app.get("/", (_req, res) => res.send("Hello World"));
+app.get("/", (_req, res) => res.status(200).send("Hello World"));
 
 export default app;
