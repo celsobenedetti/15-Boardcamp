@@ -1,8 +1,12 @@
 import "dotenv/config";
 import { Pool } from "pg";
 
-const connection = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+export class PoolFactory {
+  constructor() {}
 
-export default connection;
+  async createConnection() {
+    return new Pool({
+      connectionString: process.env.DATABASE_URL,
+    });
+  }
+}
