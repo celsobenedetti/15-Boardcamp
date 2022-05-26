@@ -1,6 +1,7 @@
 import db from "./db";
 
-(async () => {
-  const res = await db.query("SELECT * FROM categories");
-  console.log(res);
-})();
+const customerId = 1;
+
+db.query("SELECT * FROM customers WHERE id=$1", [customerId]).then((res) =>
+  console.log(res)
+);
