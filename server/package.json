@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "jest --coverage",
-    "ci:test": "node --experimental-vm-modules node_modules/.bin/jest --coverage --ci -runInBand --detectOpenHandles --forceExit",
+    "travis:test": "node --experimental-vm-modules node_modules/.bin/jest --coverage --ci -runInBand --detectOpenHandles --forceExit",
     "dev": "ts-node-dev --respawn --pretty --transpile-only src/index.ts"
   },
   "keywords": [],
