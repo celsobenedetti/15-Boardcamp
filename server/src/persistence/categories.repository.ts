@@ -1,4 +1,4 @@
-import { database } from "../app";
+import database from "../db";
 import { Category } from "../global/types";
 
 const selectCategories = async () => {

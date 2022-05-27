@@ -1,4 +1,5 @@
-import app, { database } from "../../src/app";
+import app from "../../src/app";
+import database from "../../src/db";
 import request from "supertest";
 
 describe("/categories routes tests", () => {

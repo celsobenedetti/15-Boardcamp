@@ -1,10 +1,15 @@
 import "dotenv/config";
 import { Pool } from "pg";
 
-export default class DatabaseConnection {
-  constructor() {}
+class DatabaseSingleton {
+  private constructor() {}
 
-  async createConnection() {
+  private static _instance: DatabaseSingleton;
+  public static get Instance() {
+    return this._instance || (this._instance = new this());
+  }
+
+  private async createConnection() {
     return new Pool({
       connectionString: process.env.DATABASE_URL,
     });
@@ -17,3 +22,6 @@ export default class DatabaseConnection {
     return result;
   }
 }
+
+const databaseConnection = DatabaseSingleton.Instance;
+export default databaseConnection;
