@@ -1,10 +1,7 @@
 import { Category } from "../global/types";
 import * as db from "../persistence/categories.repository";
 
-const selectCategories = async () => {
-  const rows = await db.selectCategories();
-  return rows;
-};
+const selectCategories = async () => db.selectCategories();
 
 const categoryExists = async (id: number) => {
   const rows = await db.selectCategoryById(id);
