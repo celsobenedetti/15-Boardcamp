@@ -1,10 +1,7 @@
-import app from "../../src/app";
+import app, { database } from "../../src/app";
 import request from "supertest";
-import { PoolFactory } from "../../src/db";
 
 describe("/categories routes tests", () => {
-  const poolFactory = new PoolFactory();
-
   test("GET /categories", async () => {
     request(app)
       .get("/categories")
@@ -16,19 +13,17 @@ describe("/categories routes tests", () => {
 
   describe("POST /category", () => {
     beforeAll(async () => {
-      const connection = await poolFactory.createConnection();
-      await connection.query(
-        "INSERT INTO categories (name) VALUES ('testCategory');"
+      await database.query(
+        "INSERT INTO categories (name) VALUES ('testCategory');",
+        []
       );
-      await connection.end();
     });
 
     afterAll(async () => {
-      const connection = await poolFactory.createConnection();
-      await connection.query(
-        "DELETE FROM categories WHERE name = 'testCategory' OR name = 'successTest';"
+      await database.query(
+        "DELETE FROM categories WHERE name = 'testCategory' OR name = 'successTest';",
+        []
       );
-      await connection.end();
     });
 
     it("Should return 400 if name is empty", async () => {
