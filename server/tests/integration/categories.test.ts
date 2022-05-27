@@ -4,11 +4,12 @@ import request from "supertest";
 
 describe("/categories routes tests", () => {
   test("GET /categories", async () => {
-    request(app)
+    return request(app)
       .get("/categories")
       .expect(200)
       .then((res) => {
         expect(res.body).toBeInstanceOf(Array);
+        return;
       });
   });
 
@@ -28,19 +29,19 @@ describe("/categories routes tests", () => {
     });
 
     it("Should return 400 if name is empty", async () => {
-      await request(app)
+      return request(app)
         .post("/categories")
         .send({ name: "" })
         .expect(400)
         .then((res) => {
           expect(res.body).toHaveProperty("error");
           expect(res.body.error).toMatch(/"name" is not allowed to be empty/i);
+          return;
         });
-      return;
     });
 
     it("Should return 409 if category is already in database", async () => {
-      await request(app)
+      return request(app)
         .post("/categories")
         .send({ name: "testCategory" })
         .expect(409)

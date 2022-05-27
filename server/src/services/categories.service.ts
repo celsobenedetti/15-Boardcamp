@@ -6,6 +6,11 @@ const selectCategories = async () => {
   return rows;
 };
 
+const categoryExists = async (id: number) => {
+  const rows = await db.selectCategoryById(id);
+  return rows.length > 0;
+};
+
 const insertCategory = async (category: Category) => {
   const { name } = category;
 
@@ -15,4 +20,4 @@ const insertCategory = async (category: Category) => {
   await db.insertCategory({ name });
 };
 
-export { selectCategories, insertCategory };
+export { selectCategories, insertCategory, categoryExists };
