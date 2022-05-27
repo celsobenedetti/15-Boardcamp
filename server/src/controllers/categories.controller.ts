@@ -20,7 +20,7 @@ const getCategories = async (_req: Request, res: Response) => {
 const postCategory = async (req: CategoryRequest, res: Response) => {
   try {
     const error = await insertCategory(req.body);
-    if (error) res.status(409).send(error);
+    if (error) return res.status(409).send(error);
 
     res.status(201).send();
   } catch (err) {

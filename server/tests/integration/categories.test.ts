@@ -1,4 +1,3 @@
-jest.useFakeTimers();
 import app from "../../src/app";
 import request from "supertest";
 import { PoolFactory } from "../../src/db";

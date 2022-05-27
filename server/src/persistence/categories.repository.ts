@@ -13,6 +13,7 @@ const selectCategories = async () => {
 const insertCategory = async (category: Category) => {
   const { name } = category;
   const connection = await poolFactory.createConnection();
+
   try {
     const { rows } = await connection.query(
       "SELECT * FROM categories WHERE name = $1;",
