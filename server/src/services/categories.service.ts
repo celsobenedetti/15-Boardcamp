@@ -3,7 +3,7 @@ import * as db from "../persistence/categories.repository";
 
 const selectCategories = async () => db.selectCategories();
 
-const categoryExists = async (id: number) => {
+const categoryAlreadyExists = async (id: number) => {
   const rows = await db.selectCategoryById(id);
   return rows.length > 0;
 };
@@ -17,4 +17,4 @@ const insertCategory = async (category: Category) => {
   await db.insertCategory({ name });
 };
 
-export { selectCategories, insertCategory, categoryExists };
+export { selectCategories, insertCategory, categoryAlreadyExists };

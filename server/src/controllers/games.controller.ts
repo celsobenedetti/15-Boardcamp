@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { GameRequest } from "../global/types";
-import { categoryExists } from "../services/categories.service";
+import { categoryAlreadyExists } from "../services/categories.service";
 import { selectGames, insertGame } from "../services/games.service";
 
 const getGames = async (_req: GameRequest, res: Response) => {
@@ -17,7 +17,7 @@ const getGames = async (_req: GameRequest, res: Response) => {
 
 const postGame = async (req: GameRequest, res: Response) => {
   try {
-    if (!(await categoryExists(req.body.categoryId)))
+    if (!(await categoryAlreadyExists(req.body.categoryId)))
       return res.status(400).send({
         error: `Category ${req.body.categoryId} not found in database`,
       });

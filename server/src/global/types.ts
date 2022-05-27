@@ -10,10 +10,21 @@ export type Game = {
   pricePerDay: number;
 };
 
+export type Customer = {
+  name: string;
+  phone: string;
+  cpf: string;
+  birthday: Date;
+};
+
 export interface CategoryRequest extends Express.Request {
   body: Category;
 }
 
 export interface GameRequest extends Express.Request {
   body: Game;
+}
+
+export interface CustomerRequest extends Express.Request {
+  body: Customer;
 }
