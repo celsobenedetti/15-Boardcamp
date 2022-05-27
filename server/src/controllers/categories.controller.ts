@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import { CategoryRequest } from "../global/types";
 import {
-  insertCategory,
   selectCategories,
-} from "../persistence/categories.repository";
+  insertCategory,
+} from "../services/categories.service";
 
 const getCategories = async (_req: Request, res: Response) => {
   try {
@@ -19,8 +19,8 @@ const getCategories = async (_req: Request, res: Response) => {
 
 const postCategory = async (req: CategoryRequest, res: Response) => {
   try {
-    const error = await insertCategory(req.body);
-    if (error) return res.status(409).send(error);
+    const alreadyExists = await insertCategory(req.body);
+    if (alreadyExists) return res.status(409).send(alreadyExists);
 
     res.status(201).send();
   } catch (err) {
