@@ -3,7 +3,7 @@ import {
   getCategories,
   postCategory,
 } from "../controllers/categories.controller";
-import validateCategory from "../middleware/categorie.validator";
+import validateCategory from "../middleware/category.validator";
 
 const router = Router();
 
