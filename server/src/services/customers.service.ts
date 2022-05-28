@@ -7,7 +7,7 @@ const selectCustomerById = async (id: number) => db.selectCustomerById(id);
 
 const customerAlreadyExists = async (cpf: string) => {
   const rows = await db.selectCustomerByCpf(cpf);
-  return rows.length > 0;
+  return rows;
 };
 
 const insertCustomer = async (customer: Customer) => {
