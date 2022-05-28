@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import Joi from "joi";
-import { GameRequest } from "../global/types";
+import { Game, GameRequest, TypedBodyRequest } from "../global/types";
 
 const gameSchema = Joi.object({
   name: Joi.string().required(),
@@ -11,7 +11,7 @@ const gameSchema = Joi.object({
 });
 
 const validateGame = async (
-  req: GameRequest,
+  req: TypedBodyRequest<Game>,
   res: Response,
   next: NextFunction
 ) => {

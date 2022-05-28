@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { GameRequest } from "../global/types";
+import { Game, GameRequest, TypedBodyRequest } from "../global/types";
 import { categoryAlreadyExists } from "../services/categories.service";
 import { selectGames, insertGame } from "../services/games.service";
 
@@ -15,7 +15,7 @@ const getGames = async (_req: GameRequest, res: Response) => {
   }
 };
 
-const postGame = async (req: GameRequest, res: Response) => {
+const postGame = async (req: TypedBodyRequest<Game>, res: Response) => {
   try {
     if (!(await categoryAlreadyExists(req.body.categoryId)))
       return res.status(400).send({

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CustomerRequest } from "../global/types";
+import { Customer, CustomerRequest, TypedBodyRequest } from "../global/types";
 
 import {
   selectCustomers,
@@ -38,7 +38,7 @@ const getCustomerById = async (req: Request, res: Response) => {
   }
 };
 
-const postCustomer = async (req: CustomerRequest, res: Response) => {
+const postCustomer = async (req: TypedBodyRequest<Customer>, res: Response) => {
   try {
     const cpfAlreadyRegistered = await insertCustomer(req.body);
     if (cpfAlreadyRegistered) res.status(409).send(cpfAlreadyRegistered);

@@ -17,14 +17,16 @@ export type Customer = {
   birthday: Date;
 };
 
-export interface CategoryRequest extends Express.Request {
-  body: Category;
-}
+export type Rental = {
+  customerId: number;
+  gameId: number;
+  rentDate: Date;
+  daysRented: 3;
+  returnDate: Date | null;
+  originalPrice: number;
+  delayFee: number | null;
+};
 
-export interface GameRequest extends Express.Request {
-  body: Game;
-}
-
-export interface CustomerRequest extends Express.Request {
-  body: Customer;
+export interface TypedBodyRequest<T> extends Express.Request {
+  body: T;
 }
