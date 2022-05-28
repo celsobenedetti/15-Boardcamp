@@ -27,7 +27,7 @@ const selectCustomerByCpf = async (cpf: string) => {
 const insertCustomer = async (customer: Customer) => {
   const { name, phone, cpf, birthday } = customer;
   await database.query(
-    'INSERT INTO customers ("name", "image", "categoryId", "stockTotal", "pricePerDay") VALUES ($1,$2,$3,$4);',
+    'INSERT INTO customers ("name", "phone", "cpf", "birthday") VALUES ($1,$2,$3,$4);',
     [name, phone, cpf, birthday]
   );
 };

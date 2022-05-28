@@ -45,6 +45,7 @@ const postCustomer = async (req: CustomerRequest, res: Response) => {
 
     res.status(201).send();
   } catch (err) {
+    console.log(err);
     res.status(500).send({
       message: `Internal error while inserting customer ${req.body.name}`,
       detail: err,
