@@ -14,29 +14,13 @@ const selectRentals = async () => {
 };
 
 const insertRental = async (rental: Rental) => {
-  const {
-    gameId,
-    customerId,
-    delayFee,
-    rentDate,
-    daysRented,
-    returnDate,
-    originalPrice,
-  } = rental;
+  const { gameId, customerId, delayFee, rentDate, daysRented, returnDate, originalPrice } = rental;
 
   await database.query(
     `INSERT INTO rentals 
     ("gameId", "customerId", "delayFee", "rentDate", "daysRented", "returnDate", "originalPrice") 
     VALUES ($1,$2,$3,$4,$5,$6,$7);`,
-    [
-      gameId,
-      customerId,
-      delayFee,
-      rentDate,
-      daysRented,
-      returnDate,
-      originalPrice,
-    ]
+    [gameId, customerId, delayFee, rentDate, daysRented, returnDate, originalPrice]
   );
 };
 
