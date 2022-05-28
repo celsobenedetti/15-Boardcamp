@@ -6,9 +6,16 @@ const selectGames = async () => {
   return rows;
 };
 
+const selectGameById = async (id: number) => {
+  const { rows } = await database.query("SELECT * FROM games WHERE id = $1;", [
+    id,
+  ]);
+  return rows[0];
+};
+
 const selectGameByName = async (name: string) => {
   const { rows } = await database.query(
-    "SELECT * FROM categories WHERE name = $1;",
+    "SELECT * FROM games WHERE name = $1;",
     [name]
   );
   return rows;
@@ -22,4 +29,4 @@ const insertGame = async (game: Game) => {
   );
 };
 
-export { selectGames, selectGameByName, insertGame };
+export { selectGames, selectGameByName, insertGame, selectGameById };

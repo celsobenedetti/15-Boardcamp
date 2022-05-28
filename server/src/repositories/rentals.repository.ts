@@ -3,7 +3,11 @@ import { Rental } from "../global/types";
 
 const selectRentals = async () => {
   const { rows } = await database.query(
-    `SELECT r.*, c.*, g.* FROM customers AS c JOIN rentals AS r ON r."customerId" = c.id JOIN games AS g ON r."gameId" = g.id;`,
+    `SELECT rentals.*, customers.name as "customerName", games.name as "gameName",  
+    categories.id as "categoryId", categories.name as "categoryName" 
+    FROM customers JOIN rentals ON rentals."customerId" = customers.id
+    JOIN games ON rentals."gameId" = games.id
+    JOIN categories ON games."categoryId" = categories.id;`,
     []
   );
   return rows;

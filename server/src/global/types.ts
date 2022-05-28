@@ -17,6 +17,12 @@ export type Customer = {
   birthday: Date;
 };
 
+export type BaseRental = {
+  customerId: number;
+  gameId: number;
+  daysRented: 3;
+};
+
 export type Rental = {
   customerId: number;
   gameId: number;
