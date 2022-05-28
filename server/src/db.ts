@@ -5,6 +5,7 @@ class DatabaseSingleton {
   private constructor() {}
 
   private static _instance: DatabaseSingleton;
+
   public static get Instance() {
     return this._instance || (this._instance = new this());
   }

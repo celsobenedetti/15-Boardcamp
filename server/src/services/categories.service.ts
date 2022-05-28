@@ -1,5 +1,5 @@
 import { Category } from "../global/types";
-import * as db from "../persistence/categories.repository";
+import * as db from "../repositories/categories.repository";
 
 const selectCategories = async () => db.selectCategories();
 

@@ -1,4 +1,4 @@
-import * as db from "../persistence/games.repository";
+import * as db from "../repositories/games.repository";
 import { Game } from "../global/types";
 
 const selectGames = async () => db.selectGames();

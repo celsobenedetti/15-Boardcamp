@@ -1,5 +1,5 @@
 import { Customer } from "../global/types";
-import * as db from "../persistence/customers.repository";
+import * as db from "../repositories/customers.repository";
 
 const selectCustomers = async () => db.selectCustomers();
 
