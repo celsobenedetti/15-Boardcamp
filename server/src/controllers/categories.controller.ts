@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { CategoryRequest } from "../global/types";
+import { Category, TypedBodyRequest } from "../global/types";
 import {
-  selectCategories,
   insertCategory,
+  selectCategories,
 } from "../services/categories.service";
 
 const getCategories = async (_req: Request, res: Response) => {
@@ -17,7 +17,7 @@ const getCategories = async (_req: Request, res: Response) => {
   }
 };
 
-const postCategory = async (req: CategoryRequest, res: Response) => {
+const postCategory = async (req: TypedBodyRequest<Category>, res: Response) => {
   try {
     const alreadyExists = await insertCategory(req.body);
     if (alreadyExists) return res.status(409).send(alreadyExists);

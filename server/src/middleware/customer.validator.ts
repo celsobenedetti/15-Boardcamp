@@ -1,6 +1,6 @@
 import { NextFunction, Response } from "express";
 import Joi from "joi";
-import { CustomerRequest } from "../global/types";
+import { Customer, TypedBodyRequest } from "../global/types";
 
 const customerSchema = Joi.object({
   name: Joi.string().required(),
@@ -13,7 +13,7 @@ const customerSchema = Joi.object({
 });
 
 const validateCustomer = async (
-  req: CustomerRequest,
+  req: TypedBodyRequest<Customer>,
   res: Response,
   next: NextFunction
 ) => {

@@ -1,13 +1,13 @@
 import { NextFunction, Response } from "express";
 import Joi from "joi";
-import { CategoryRequest } from "../global/types";
+import { Category, TypedBodyRequest } from "../global/types";
 
 const categorySchema = Joi.object({
   name: Joi.string().required(),
 });
 
 const validateCategory = (
-  req: CategoryRequest,
+  req: TypedBodyRequest<Category>,
   res: Response,
   next: NextFunction
 ) => {
