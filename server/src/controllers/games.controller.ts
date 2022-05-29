@@ -1,11 +1,12 @@
-import { Request, Response } from "express";
-import { Game, TypedBodyRequest } from "../global/types";
+import { Response } from "express";
+import { Game, GetRequest, TypedBodyRequest } from "../global/types";
 import { categoryAlreadyExists } from "../services/categories.service";
 import { insertGame, selectGames } from "../services/games.service";
 
-const getGames = async (_req: Request, res: Response) => {
+const getGames = async (req: GetRequest, res: Response) => {
   try {
-    const rows = await selectGames();
+    const { offset, limit } = req.query;
+    const rows = await selectGames(offset, limit);
     res.status(200).send(rows);
   } catch (err) {
     res.status(500).send({

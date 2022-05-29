@@ -1,23 +1,21 @@
 import database from "../db";
 import { Game } from "../global/types";
 
-const selectGames = async () => {
-  const { rows } = await database.query("SELECT * FROM games;", []);
+const selectGames = async (offset: number, limit: number) => {
+  const { rows } = await database.query("SELECT * FROM games OFFSET $1 LIMIT $2;", [
+    offset,
+    limit,
+  ]);
   return rows;
 };
 
 const selectGameById = async (id: number) => {
-  const { rows } = await database.query("SELECT * FROM games WHERE id = $1;", [
-    id,
-  ]);
+  const { rows } = await database.query("SELECT * FROM games WHERE id = $1;", [id]);
   return rows[0];
 };
 
 const selectGameByName = async (name: string) => {
-  const { rows } = await database.query(
-    "SELECT * FROM games WHERE name = $1;",
-    [name]
-  );
+  const { rows } = await database.query("SELECT * FROM games WHERE name = $1;", [name]);
   return rows;
 };
 
