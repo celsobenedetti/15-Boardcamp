@@ -1,8 +1,12 @@
 import { Customer } from "../global/types";
 import * as db from "../repositories/customers.repository";
 
-const selectCustomers = async (offset: number, limit: number) =>
-  db.selectCustomers(offset, limit);
+const selectCustomers = async (
+  offset: number,
+  limit: number,
+  order: string,
+  desc: boolean
+) => db.selectCustomers(offset, limit, order, desc);
 
 const selectCustomerById = async (id: number) => db.selectCustomerById(id);
 

@@ -8,8 +8,10 @@ const selectGames = async (
   desc: boolean
 ) => {
   const { rows } = await database.query(
-    `SELECT * FROM games ORDER BY $1 ${desc ? "DESC" : ""} OFFSET $2 LIMIT $3;`,
-    [order, offset, limit]
+    `SELECT * FROM games ORDER BY ${order ? order : "id"} ${
+      desc ? "DESC" : ""
+    } OFFSET $1 LIMIT $2;`,
+    [offset, limit]
   );
   return rows;
 };

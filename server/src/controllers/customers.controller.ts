@@ -15,8 +15,8 @@ import {
 
 const getCustomers = async (req: GetRequest, res: Response) => {
   try {
-    const { offset, limit } = req.query;
-    const rows = await selectCustomers(offset, limit);
+    const { offset, limit, desc, order } = req.query;
+    const rows = await selectCustomers(offset, limit, order, desc);
     res.status(200).send(rows);
   } catch (err) {
     res.status(500).send({
