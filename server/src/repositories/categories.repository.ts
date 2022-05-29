@@ -1,24 +1,23 @@
 import database from "../db";
 import { Category } from "../global/types";
 
-const selectCategories = async () => {
-  const { rows } = await database.query("SELECT * FROM categories;", []);
+const selectCategories = async (offset: number, limit: number) => {
+  const { rows } = await database.query("SELECT * FROM categories OFFSET $1 LIMIT $2;", [
+    offset,
+    limit,
+  ]);
   return rows;
 };
 
 const selectCategoryByName = async (name: string) => {
-  const { rows } = await database.query(
-    "SELECT * FROM categories WHERE name = $1;",
-    [name]
-  );
+  const { rows } = await database.query("SELECT * FROM categories WHERE name = $1;", [
+    name,
+  ]);
   return rows;
 };
 
 const selectCategoryById = async (id: number) => {
-  const { rows } = await database.query(
-    "SELECT * FROM categories WHERE id = $1;",
-    [id]
-  );
+  const { rows } = await database.query("SELECT * FROM categories WHERE id = $1;", [id]);
   return rows;
 };
 
@@ -27,9 +26,4 @@ const insertCategory = async (category: Category) => {
   await database.query("INSERT INTO categories (name) VALUES ($1);", [name]);
 };
 
-export {
-  selectCategories,
-  selectCategoryByName,
-  selectCategoryById,
-  insertCategory,
-};
+export { selectCategories, selectCategoryByName, selectCategoryById, insertCategory };

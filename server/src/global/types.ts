@@ -37,6 +37,13 @@ export interface TypedBodyRequest<T> extends Express.Request {
   body: T;
 }
 
+export interface GetRequest extends Express.Request {
+  query: {
+    limit: number;
+    offset: number;
+  };
+}
+
 export interface ParamsIdRequest extends Express.Request {
   params: {
     id: number;
