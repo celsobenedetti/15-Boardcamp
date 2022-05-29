@@ -35,4 +35,5 @@ export type Rental = {
 
 export interface TypedBodyRequest<T> extends Express.Request {
   body: T;
+  params: any;
 }

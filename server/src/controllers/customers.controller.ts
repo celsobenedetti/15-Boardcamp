@@ -1,7 +1,12 @@
 import { Request, Response } from "express";
 import { Customer, TypedBodyRequest } from "../global/types";
 
-import { insertCustomer, selectCustomerById, selectCustomers } from "../services/customers.service";
+import {
+  insertCustomer,
+  selectCustomerById,
+  selectCustomers,
+  updateCustomer,
+} from "../services/customers.service";
 
 const getCustomers = async (_req: Request, res: Response) => {
   try {
@@ -46,4 +51,20 @@ const postCustomer = async (req: TypedBodyRequest<Customer>, res: Response) => {
   }
 };
 
-export { getCustomers, getCustomerById, postCustomer };
+const putCustomer = async (req: TypedBodyRequest<Customer>, res: Response) => {
+  const { id } = req.params;
+  try {
+    const cpfBelongsToAnotherUser = await updateCustomer(id, req.body);
+    if (cpfBelongsToAnotherUser) res.status(409).send(cpfBelongsToAnotherUser);
+
+    res.status(200).send();
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({
+      message: `Internal error while updating customer ${req.body.name}`,
+      detail: err,
+    });
+  }
+};
+
+export { getCustomers, getCustomerById, postCustomer, putCustomer };

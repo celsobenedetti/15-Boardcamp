@@ -11,10 +11,17 @@ const customerAlreadyExists = async (cpf: string) => {
 };
 
 const insertCustomer = async (customer: Customer) => {
-  const error = await customerAlreadyExists(customer.cpf);
-  if (error) return { error: `CPF ${customer.cpf} already registered` };
+  const cpfExists = await customerAlreadyExists(customer.cpf);
+  if (cpfExists) return { error: `CPF ${customer.cpf} already registered` };
 
   await db.insertCustomer(customer);
 };
 
-export { selectCustomers, selectCustomerById, insertCustomer };
+const updateCustomer = async (customerId: number, customer: Customer) => {
+  const cpfAlreadyExists = await db.selectCpfInOtherCustomers(customerId, customer.cpf);
+  if (cpfAlreadyExists) return { error: `CPF ${customer.cpf} belongs to another customer` };
+
+  await db.updateCustomer(customerId, customer);
+};
+
+export { selectCustomers, selectCustomerById, insertCustomer, updateCustomer };
