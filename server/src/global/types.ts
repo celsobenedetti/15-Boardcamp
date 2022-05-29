@@ -37,3 +37,10 @@ export interface TypedBodyRequest<T> extends Express.Request {
   body: T;
   params: any;
 }
+
+export interface GetRentalsRequest extends Express.Request {
+  query: {
+    gameId: number;
+    customerId: number;
+  };
+}

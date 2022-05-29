@@ -1,16 +1,18 @@
 import { Request, Response } from "express";
-import { BaseRental, TypedBodyRequest } from "../global/types";
+import { BaseRental, TypedBodyRequest, GetRentalsRequest } from "../global/types";
 import {
   customerAndGameExist,
   insertRental,
   formatSelectRentals,
 } from "../services/rentals.service";
 
-const getRentals = async (_req: Request, res: Response) => {
+const getRentals = async (req: GetRentalsRequest, res: Response) => {
+  const { customerId, gameId } = req.query;
   try {
-    const rentalsData = await formatSelectRentals();
+    const rentalsData = await formatSelectRentals(customerId, gameId);
     res.status(200).send(rentalsData);
   } catch (err) {
+    console.log(err);
     res.status(500).send({
       message: "Internal error while getting rentals",
       detail: err,
