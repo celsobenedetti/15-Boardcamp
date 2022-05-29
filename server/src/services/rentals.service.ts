@@ -3,20 +3,20 @@ import { selectCustomerById } from "../repositories/customers.repository";
 import { selectGameById } from "../repositories/games.repository";
 import * as db from "../repositories/rentals.repository";
 
-const selectRentals = async () => {
+const formatSelectRentals = async () => {
   const rentals = await db.selectRentals();
 
-  return rentals.map((rental) => {
-    const { customerName, gameName, categoryId, categoryName, ...restRental } = rental;
+  return rentals.map((eachRental) => {
+    const { customerName, gameName, categoryId, categoryName, ...rentalInfo } = eachRental;
 
     return {
-      ...restRental,
+      ...rentalInfo,
       customer: {
-        id: rental.customerId,
+        id: rentalInfo.customerId,
         name: customerName,
       },
       game: {
-        id: rental.gameId,
+        id: rentalInfo.gameId,
         name: gameName,
         categoryId: categoryId,
         categoryName: categoryName,
@@ -51,4 +51,4 @@ const insertRental = async (rentalInfo: BaseRental) => {
   await db.insertRental(rental);
 };
 
-export { selectRentals, customerAndGameExist, insertRental };
+export { formatSelectRentals, customerAndGameExist, insertRental };

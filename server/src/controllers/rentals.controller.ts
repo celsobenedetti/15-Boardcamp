@@ -3,13 +3,13 @@ import { BaseRental, TypedBodyRequest } from "../global/types";
 import {
   customerAndGameExist,
   insertRental,
-  selectRentals,
+  formatSelectRentals,
 } from "../services/rentals.service";
 
 const getRentals = async (_req: Request, res: Response) => {
   try {
-    const rows = await selectRentals();
-    res.status(200).send(rows);
+    const rentalsData = await formatSelectRentals();
+    res.status(200).send(rentalsData);
   } catch (err) {
     res.status(500).send({
       message: "Internal error while getting rentals",
@@ -29,7 +29,7 @@ const postRental = async (req: TypedBodyRequest<BaseRental>, res: Response) => {
     res.status(201).send();
   } catch (err) {
     res.status(500).send({
-      message: "Internal error while getting rentals",
+      message: "Internal error while posting rental",
       detail: err,
     });
   }

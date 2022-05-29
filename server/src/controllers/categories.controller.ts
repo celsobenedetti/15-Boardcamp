@@ -1,9 +1,6 @@
 import { Request, Response } from "express";
 import { Category, TypedBodyRequest } from "../global/types";
-import {
-  insertCategory,
-  selectCategories,
-} from "../services/categories.service";
+import { insertCategory, selectCategories } from "../services/categories.service";
 
 const getCategories = async (_req: Request, res: Response) => {
   try {

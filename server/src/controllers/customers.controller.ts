@@ -1,11 +1,7 @@
 import { Request, Response } from "express";
 import { Customer, TypedBodyRequest } from "../global/types";
 
-import {
-  insertCustomer,
-  selectCustomerById,
-  selectCustomers,
-} from "../services/customers.service";
+import { insertCustomer, selectCustomerById, selectCustomers } from "../services/customers.service";
 
 const getCustomers = async (_req: Request, res: Response) => {
   try {
@@ -24,10 +20,7 @@ const getCustomerById = async (req: Request, res: Response) => {
     const { id } = req.params;
     const customer = await selectCustomerById(parseInt(id));
 
-    if (!customer)
-      return res
-        .status(404)
-        .send({ error: `Customer ${id} not found in database` });
+    if (!customer) return res.status(404).send({ error: `Customer ${id} not found in database` });
 
     res.status(200).send(customer);
   } catch (err) {
