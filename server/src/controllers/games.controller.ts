@@ -25,7 +25,7 @@ const postGame = async (req: TypedBodyRequest<Game>, res: Response) => {
     const gameAlreadyExists = await insertGame(req.body);
     if (gameAlreadyExists) return res.status(409).send(gameAlreadyExists);
 
-    res.status(201).send();
+    res.sendStatus(201);
   } catch (err) {
     console.log(err);
     res.status(500).send({

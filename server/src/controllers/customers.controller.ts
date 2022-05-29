@@ -42,7 +42,7 @@ const postCustomer = async (req: TypedBodyRequest<Customer>, res: Response) => {
     const cpfAlreadyRegistered = await insertCustomer(req.body);
     if (cpfAlreadyRegistered) res.status(409).send(cpfAlreadyRegistered);
 
-    res.status(201).send();
+    res.sendStatus(201);
   } catch (err) {
     console.log(err);
     res.status(500).send({
@@ -58,7 +58,7 @@ const putCustomer = async (req: PutCustomerRequest, res: Response) => {
     const cpfBelongsToAnotherUser = await updateCustomer(id, req.body);
     if (cpfBelongsToAnotherUser) res.status(409).send(cpfBelongsToAnotherUser);
 
-    res.status(200).send();
+    res.sendStatus(200);
   } catch (err) {
     console.log(err);
     res.status(500).send({

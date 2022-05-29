@@ -36,7 +36,7 @@ const postRental = async (req: TypedBodyRequest<BaseRental>, res: Response) => {
 
     await insertRental({ customerId, gameId, daysRented });
 
-    res.status(201).send();
+    res.sendStatus(201);
   } catch (err) {
     res.status(500).send({
       message: "Internal error while posting rental",
@@ -55,7 +55,7 @@ const postReturnRental = async (req: ParamsIdRequest, res: Response) => {
 
     await returnRental(id, rental);
 
-    res.status(201).send();
+    res.sendStatus(201);
   } catch (err) {
     console.error(err);
     res.status(500).send({
@@ -75,11 +75,11 @@ const deleteRental = async (req: ParamsIdRequest, res: Response) => {
 
     await deleteRentalById(id);
 
-    res.status(200).send();
+    res.sendStatus(200);
   } catch (err) {
     console.error(err);
     res.status(500).send({
-      message: "Internal error while returning rental",
+      message: "Internal error while deleting rental",
       detail: err,
     });
   }

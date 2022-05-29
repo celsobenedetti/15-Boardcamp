@@ -19,7 +19,7 @@ const postCategory = async (req: TypedBodyRequest<Category>, res: Response) => {
     const alreadyExists = await insertCategory(req.body);
     if (alreadyExists) return res.status(409).send(alreadyExists);
 
-    res.status(201).send();
+    res.sendStatus(201);
   } catch (err) {
     res.status(500).send({
       message: "Internal error while posting category",
