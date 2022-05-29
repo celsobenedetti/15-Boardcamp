@@ -4,8 +4,10 @@ import { insertCategory, selectCategories } from "../services/categories.service
 
 const getCategories = async (req: GetRequest, res: Response) => {
   try {
-    const { offset, limit } = req.query;
-    const categories = await selectCategories(offset, limit);
+    const { offset, limit, desc } = req.query;
+    const order = req.query.order || "id";
+
+    const categories = await selectCategories(offset, limit, order, desc);
     res.status(200).send(categories);
   } catch (err) {
     res.status(500).send({

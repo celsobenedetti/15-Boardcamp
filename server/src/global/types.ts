@@ -41,6 +41,8 @@ export interface GetRequest extends Express.Request {
   query: {
     limit: number;
     offset: number;
+    order: string;
+    desc: boolean;
   };
 }
 

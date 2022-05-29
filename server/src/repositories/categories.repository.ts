@@ -1,11 +1,16 @@
 import database from "../db";
 import { Category } from "../global/types";
 
-const selectCategories = async (offset: number, limit: number) => {
-  const { rows } = await database.query("SELECT * FROM categories OFFSET $1 LIMIT $2;", [
-    offset,
-    limit,
-  ]);
+const selectCategories = async (
+  offset: number,
+  limit: number,
+  order: string,
+  desc: boolean
+) => {
+  const { rows } = await database.query(
+    `SELECT * FROM categories ORDER BY $1 ${desc ? "DESC" : ""} OFFSET $2 LIMIT $3 ;`,
+    [order, offset, limit]
+  );
   return rows;
 };
 
