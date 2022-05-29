@@ -1,9 +1,16 @@
-import { Request, Response } from "express";
-import { BaseRental, TypedBodyRequest, GetRentalsRequest } from "../global/types";
+import { Response } from "express";
+import {
+  BaseRental,
+  GetRentalsRequest,
+  ParamsIdRequest,
+  TypedBodyRequest,
+} from "../global/types";
 import {
   customerAndGameExist,
-  insertRental,
   formatSelectRentals,
+  insertRental,
+  rentalExists,
+  returnRental,
 } from "../services/rentals.service";
 
 const getRentals = async (req: GetRentalsRequest, res: Response) => {
@@ -37,4 +44,24 @@ const postRental = async (req: TypedBodyRequest<BaseRental>, res: Response) => {
   }
 };
 
-export { getRentals, postRental };
+const postReturnRental = async (req: ParamsIdRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+    const rental = await rentalExists(id);
+    if (!rental) res.status(404).send({ error: `Rental ${id} not found` });
+    if (rental.returnDate)
+      res.status(400).send({ error: `Rental ${id} has already been returned` });
+
+    await returnRental(id, rental);
+
+    res.status(201).send();
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({
+      message: "Internal error while returning rental",
+      detail: err,
+    });
+  }
+};
+
+export { getRentals, postRental, postReturnRental };

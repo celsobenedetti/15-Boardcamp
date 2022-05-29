@@ -35,7 +35,16 @@ export type Rental = {
 
 export interface TypedBodyRequest<T> extends Express.Request {
   body: T;
-  params: any;
+}
+
+export interface ParamsIdRequest extends Express.Request {
+  params: {
+    id: number;
+  };
+}
+
+export interface PutCustomerRequest extends ParamsIdRequest {
+  body: Customer;
 }
 
 export interface GetRentalsRequest extends Express.Request {

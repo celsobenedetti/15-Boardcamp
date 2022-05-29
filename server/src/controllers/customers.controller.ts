@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Customer, TypedBodyRequest } from "../global/types";
+import { Customer, PutCustomerRequest, TypedBodyRequest } from "../global/types";
 
 import {
   insertCustomer,
@@ -25,7 +25,8 @@ const getCustomerById = async (req: Request, res: Response) => {
     const { id } = req.params;
     const customer = await selectCustomerById(parseInt(id));
 
-    if (!customer) return res.status(404).send({ error: `Customer ${id} not found in database` });
+    if (!customer)
+      return res.status(404).send({ error: `Customer ${id} not found in database` });
 
     res.status(200).send(customer);
   } catch (err) {
@@ -51,9 +52,9 @@ const postCustomer = async (req: TypedBodyRequest<Customer>, res: Response) => {
   }
 };
 
-const putCustomer = async (req: TypedBodyRequest<Customer>, res: Response) => {
-  const { id } = req.params;
+const putCustomer = async (req: PutCustomerRequest, res: Response) => {
   try {
+    const { id } = req.params;
     const cpfBelongsToAnotherUser = await updateCustomer(id, req.body);
     if (cpfBelongsToAnotherUser) res.status(409).send(cpfBelongsToAnotherUser);
 

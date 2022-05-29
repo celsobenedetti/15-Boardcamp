@@ -15,8 +15,23 @@ const selectRentals = async (customerId: number, gameId: number) => {
   return rows;
 };
 
+const selectRentalById = async (rentalId: number): Promise<Rental> => {
+  const { rows } = await database.query("SELECT * FROM rentals WHERE id = $1;", [
+    rentalId,
+  ]);
+  return rows[0];
+};
+
 const insertRental = async (rental: Rental) => {
-  const { gameId, customerId, delayFee, rentDate, daysRented, returnDate, originalPrice } = rental;
+  const {
+    gameId,
+    customerId,
+    delayFee,
+    rentDate,
+    daysRented,
+    returnDate,
+    originalPrice,
+  } = rental;
 
   await database.query(
     `INSERT INTO rentals 
@@ -26,4 +41,13 @@ const insertRental = async (rental: Rental) => {
   );
 };
 
-export { selectRentals, insertRental };
+const updateRental = async (rentalId: number, rental: Rental) => {
+  const { returnDate, delayFee } = rental;
+
+  await database.query(
+    `UPDATE rentals SET "returnDate" = $1, "delayFee" = $2 WHERE id = $3;`,
+    [returnDate, delayFee, rentalId]
+  );
+};
+
+export { selectRentals, selectRentalById, insertRental, updateRental };

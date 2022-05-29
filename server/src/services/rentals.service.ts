@@ -1,4 +1,4 @@
-import { BaseRental } from "../global/types";
+import { BaseRental, Rental } from "../global/types";
 import { selectCustomerById } from "../repositories/customers.repository";
 import { selectGameById } from "../repositories/games.repository";
 import * as db from "../repositories/rentals.repository";
@@ -7,7 +7,8 @@ const formatSelectRentals = async (customerId: number, gameId: number) => {
   const rentals = await db.selectRentals(customerId, gameId);
 
   return rentals.map((eachRental) => {
-    const { customerName, gameName, categoryId, categoryName, ...rentalInfo } = eachRental;
+    const { customerName, gameName, categoryId, categoryName, ...rentalInfo } =
+      eachRental;
 
     return {
       ...rentalInfo,
@@ -33,6 +34,10 @@ const customerAndGameExist = async (customerId: number, gameId: number) => {
   if (!game) return { error: `Game ${gameId} not registered in database` };
 };
 
+const rentalExists = async (rentalId: number): Promise<Rental> => {
+  return await db.selectRentalById(rentalId);
+};
+
 const insertRental = async (rentalInfo: BaseRental) => {
   const { customerId, gameId, daysRented } = rentalInfo;
 
@@ -51,4 +56,23 @@ const insertRental = async (rentalInfo: BaseRental) => {
   await db.insertRental(rental);
 };
 
-export { formatSelectRentals, customerAndGameExist, insertRental };
+const returnRental = async (rentalId: number, rental: Rental) => {
+  rental.returnDate = new Date();
+  const daysLate = Math.floor(
+    (rental.returnDate.getTime() - rental.rentDate.getTime()) / (1000 * 3600 * 24) -
+      rental.daysRented
+  );
+
+  const game = await selectGameById(rental.gameId);
+  rental.delayFee = daysLate * game.pricePerDay;
+
+  await db.updateRental(rentalId, rental);
+};
+
+export {
+  formatSelectRentals,
+  customerAndGameExist,
+  rentalExists,
+  insertRental,
+  returnRental,
+};
