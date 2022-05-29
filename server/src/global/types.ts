@@ -58,5 +58,7 @@ export interface GetRentalsRequest extends Express.Request {
   query: {
     gameId: number;
     customerId: number;
+    offset: number;
+    limit: number;
   };
 }

@@ -1,7 +1,12 @@
 import database from "../db";
 import { Rental } from "../global/types";
 
-const selectRentals = async (customerId: number, gameId: number) => {
+const selectRentals = async (
+  customerId: number,
+  gameId: number,
+  offset: number,
+  limit: number
+) => {
   const { rows } = await database.query(
     `SELECT rentals.*, customers.name as "customerName", games.name as "gameName",  
       categories.id as "categoryId", categories.name as "categoryName" 
@@ -9,8 +14,9 @@ const selectRentals = async (customerId: number, gameId: number) => {
       JOIN games ON rentals."gameId" = games.id
       JOIN categories ON games."categoryId" = categories.id 
       WHERE customers.id = (CASE WHEN $1::INTEGER IS NULL THEN customers.id ELSE $1 END)
-      AND games.id = (CASE WHEN $2::INTEGER IS NULL THEN games.id ELSE $2 END);`,
-    [customerId, gameId]
+      AND games.id = (CASE WHEN $2::INTEGER IS NULL THEN games.id ELSE $2 END)
+      OFFSET $3 LIMIT $4;`,
+    [customerId, gameId, offset, limit]
   );
   return rows;
 };

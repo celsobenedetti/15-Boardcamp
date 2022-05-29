@@ -15,9 +15,9 @@ import {
 } from "../services/rentals.service";
 
 const getRentals = async (req: GetRentalsRequest, res: Response) => {
-  const { customerId, gameId } = req.query;
+  const { customerId, gameId, offset, limit } = req.query;
   try {
-    const rentalsData = await formatSelectRentals(customerId, gameId);
+    const rentalsData = await formatSelectRentals(customerId, gameId, offset, limit);
     res.status(200).send(rentalsData);
   } catch (err) {
     console.log(err);
