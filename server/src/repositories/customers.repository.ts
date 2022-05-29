@@ -1,8 +1,11 @@
 import database from "../db";
 import { Customer } from "../global/types";
 
-const selectCustomers = async () => {
-  const { rows } = await database.query("SELECT * FROM customers;", []);
+const selectCustomers = async (offset: number, limit: number) => {
+  const { rows } = await database.query("SELECT * FROM customers OFFSET $1 LIMIT $2;", [
+    offset,
+    limit,
+  ]);
   return rows;
 };
 
@@ -19,10 +22,10 @@ const selectCustomerByCpf = async (cpf: string) => {
 };
 
 const selectCpfInOtherCustomers = async (customerId: number, cpf: string) => {
-  const { rows } = await database.query("SELECT * FROM CUSTOMERS WHERE cpf = $1 AND id != $2;", [
-    cpf,
-    customerId,
-  ]);
+  const { rows } = await database.query(
+    "SELECT * FROM CUSTOMERS WHERE cpf = $1 AND id != $2;",
+    [cpf, customerId]
+  );
   console.log(rows);
   return rows[0];
 };

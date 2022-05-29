@@ -1,5 +1,10 @@
 import { Request, Response } from "express";
-import { Customer, PutCustomerRequest, TypedBodyRequest } from "../global/types";
+import {
+  Customer,
+  GetRequest,
+  PutCustomerRequest,
+  TypedBodyRequest,
+} from "../global/types";
 
 import {
   insertCustomer,
@@ -8,9 +13,10 @@ import {
   updateCustomer,
 } from "../services/customers.service";
 
-const getCustomers = async (_req: Request, res: Response) => {
+const getCustomers = async (req: GetRequest, res: Response) => {
   try {
-    const rows = await selectCustomers();
+    const { offset, limit } = req.query;
+    const rows = await selectCustomers(offset, limit);
     res.status(200).send(rows);
   } catch (err) {
     res.status(500).send({

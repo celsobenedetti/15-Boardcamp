@@ -1,7 +1,8 @@
 import { Customer } from "../global/types";
 import * as db from "../repositories/customers.repository";
 
-const selectCustomers = async () => db.selectCustomers();
+const selectCustomers = async (offset: number, limit: number) =>
+  db.selectCustomers(offset, limit);
 
 const selectCustomerById = async (id: number) => db.selectCustomerById(id);
 
@@ -19,7 +20,8 @@ const insertCustomer = async (customer: Customer) => {
 
 const updateCustomer = async (customerId: number, customer: Customer) => {
   const cpfAlreadyExists = await db.selectCpfInOtherCustomers(customerId, customer.cpf);
-  if (cpfAlreadyExists) return { error: `CPF ${customer.cpf} belongs to another customer` };
+  if (cpfAlreadyExists)
+    return { error: `CPF ${customer.cpf} belongs to another customer` };
 
   await db.updateCustomer(customerId, customer);
 };
