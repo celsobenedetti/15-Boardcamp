@@ -7,6 +7,7 @@ import {
 } from "../global/types";
 import {
   customerAndGameExist,
+  deleteRentalById,
   formatSelectRentals,
   insertRental,
   rentalExists,
@@ -48,9 +49,9 @@ const postReturnRental = async (req: ParamsIdRequest, res: Response) => {
   try {
     const { id } = req.params;
     const rental = await rentalExists(id);
-    if (!rental) res.status(404).send({ error: `Rental ${id} not found` });
+    if (!rental) return res.status(404).send({ error: `Rental ${id} not found` });
     if (rental.returnDate)
-      res.status(400).send({ error: `Rental ${id} has already been returned` });
+      return res.status(400).send({ error: `Rental ${id} has already been returned` });
 
     await returnRental(id, rental);
 
@@ -64,4 +65,24 @@ const postReturnRental = async (req: ParamsIdRequest, res: Response) => {
   }
 };
 
-export { getRentals, postRental, postReturnRental };
+const deleteRental = async (req: ParamsIdRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+    const rental = await rentalExists(id);
+    if (!rental) return res.status(404).send({ error: `Rental ${id} not found` });
+    if (rental.returnDate)
+      return res.status(400).send({ error: `Rental ${id} has already been returned` });
+
+    await deleteRentalById(id);
+
+    res.status(200).send();
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({
+      message: "Internal error while returning rental",
+      detail: err,
+    });
+  }
+};
+
+export { getRentals, postRental, postReturnRental, deleteRental };

@@ -50,4 +50,8 @@ const updateRental = async (rentalId: number, rental: Rental) => {
   );
 };
 
-export { selectRentals, selectRentalById, insertRental, updateRental };
+const deleteRental = async (rentalId: number) => {
+  await database.query("DELETE FROM rentals WHERE id = $1;", [rentalId]);
+};
+
+export { selectRentals, selectRentalById, insertRental, updateRental, deleteRental };

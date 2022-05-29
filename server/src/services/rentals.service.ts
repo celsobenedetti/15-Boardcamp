@@ -69,10 +69,15 @@ const returnRental = async (rentalId: number, rental: Rental) => {
   await db.updateRental(rentalId, rental);
 };
 
+const deleteRentalById = async (rentalId: number) => {
+  await db.deleteRental(rentalId);
+};
+
 export {
   formatSelectRentals,
   customerAndGameExist,
   rentalExists,
   insertRental,
   returnRental,
+  deleteRentalById,
 };
