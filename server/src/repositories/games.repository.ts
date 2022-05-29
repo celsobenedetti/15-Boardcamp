@@ -1,11 +1,16 @@
 import database from "../db";
 import { Game } from "../global/types";
 
-const selectGames = async (offset: number, limit: number) => {
-  const { rows } = await database.query("SELECT * FROM games OFFSET $1 LIMIT $2;", [
-    offset,
-    limit,
-  ]);
+const selectGames = async (
+  offset: number,
+  limit: number,
+  order: string,
+  desc: boolean
+) => {
+  const { rows } = await database.query(
+    `SELECT * FROM games ORDER BY $1 ${desc ? "DESC" : ""} OFFSET $2 LIMIT $3;`,
+    [order, offset, limit]
+  );
   return rows;
 };
 
