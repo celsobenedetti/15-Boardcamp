@@ -20,7 +20,7 @@ export type Customer = {
 export type BaseRental = {
   customerId: number;
   gameId: number;
-  daysRented: 3;
+  daysRented: number;
 };
 
 export type Rental = {
