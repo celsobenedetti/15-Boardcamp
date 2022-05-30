@@ -15,10 +15,7 @@ describe("/categories routes tests", () => {
 
   describe("POST /category", () => {
     beforeAll(async () => {
-      await database.query(
-        "INSERT INTO categories (name) VALUES ('testCategory');",
-        []
-      );
+      await database.query("INSERT INTO categories (name) VALUES ('testCategory');", []);
     });
 
     afterAll(async () => {
@@ -47,9 +44,7 @@ describe("/categories routes tests", () => {
         .expect(409)
         .then((res) => {
           expect(res.body).toHaveProperty("error");
-          expect(res.body.error).toMatch(
-            /category testCategory already exists/i
-          );
+          expect(res.body.error).toMatch(/category testCategory already exists/i);
           return;
         });
     });

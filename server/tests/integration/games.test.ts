@@ -1,5 +1,4 @@
 import app from "../../src/app";
-import database from "../../src/db";
 import request from "supertest";
 
 describe("/games routes tests", () => {
@@ -57,9 +56,7 @@ describe("/games routes tests", () => {
         .expect(400)
         .then((res) => {
           expect(res.body).toHaveProperty("error");
-          expect(res.body.error).toBe(
-            '"stockTotal" must be greater than or equal to 1'
-          );
+          expect(res.body.error).toBe('"stockTotal" must be greater than or equal to 1');
           return;
         });
 
@@ -72,9 +69,7 @@ describe("/games routes tests", () => {
         .expect(400)
         .then((res) => {
           expect(res.body).toHaveProperty("error");
-          expect(res.body.error).toBe(
-            '"pricePerDay" must be greater than or equal to 1'
-          );
+          expect(res.body.error).toBe('"pricePerDay" must be greater than or equal to 1');
           return;
         });
     });
