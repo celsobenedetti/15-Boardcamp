@@ -50,7 +50,6 @@ const postCustomer = async (req: TypedBodyRequest<Customer>, res: Response) => {
 
     res.sendStatus(201);
   } catch (err) {
-    console.log(err);
     res.status(500).send({
       message: `Internal error while inserting customer ${req.body.name}`,
       detail: err,

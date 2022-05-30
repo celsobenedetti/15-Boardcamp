@@ -33,11 +33,6 @@ export type Rental = {
   delayFee: number | null;
 };
 
-export function propertyExistsInType<T>(property: string, type: T) {
-  if (!property) return false;
-  return property in type;
-}
-
 export interface TypedBodyRequest<T> extends Express.Request {
   body: T;
 }
