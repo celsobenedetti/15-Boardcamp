@@ -44,10 +44,12 @@ export type SelectQueryParams = {
   desc: boolean;
 };
 
-export type SelectRentalsParams = SelectQueryParams & {
+export interface SelectRentalsParams extends SelectQueryParams {
   gameId: number;
   customerId: number;
-};
+  status: "open" | "closed";
+  startDate: Date;
+}
 
 export interface GetRentalsRequest extends Express.Request {
   query: SelectRentalsParams;

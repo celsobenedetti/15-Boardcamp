@@ -1,9 +1,15 @@
 import database from "../db";
 import { propertyExistsInType } from "../global/typeCheck";
 import { Rental, SelectRentalsParams } from "../global/types";
+import moment from "moment";
 
 const selectRentals = async (selectRentalsArgs: SelectRentalsParams) => {
-  let { customerId, gameId, offset, limit, order, desc } = selectRentalsArgs;
+  let { customerId, gameId, offset, limit, order, desc, status, startDate } =
+    selectRentalsArgs;
+
+  const statusExists = status && (status === "open" || status === "closed");
+  const statusOpen = status === "open";
+  const isValidDate = moment(startDate, "YYYY-MM-DD", true).isValid();
 
   if (!propertyExistsInType(order, "Rental")) order = "id";
 
@@ -15,6 +21,10 @@ const selectRentals = async (selectRentalsArgs: SelectRentalsParams) => {
       JOIN categories ON games."categoryId" = categories.id 
       WHERE customers.id = (CASE WHEN $1::INTEGER IS NULL THEN customers.id ELSE $1 END)
       AND games.id = (CASE WHEN $2::INTEGER IS NULL THEN games.id ELSE $2 END) 
+      AND rentals."returnDate" ${
+        !statusExists ? ' = rentals."returnDate"' : statusOpen ? "IS NULL" : "IS NOT NULL"
+      }
+      AND rentals."rentDate" >= '${isValidDate ? startDate : "1900-01-01"}'::date
       ORDER BY rentals."${order}" ${desc ? "DESC" : ""}
       OFFSET $3 LIMIT $4;`,
     [customerId, gameId, offset, limit]
