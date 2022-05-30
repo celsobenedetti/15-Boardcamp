@@ -37,13 +37,24 @@ export interface TypedBodyRequest<T> extends Express.Request {
   body: T;
 }
 
+export type SelectQueryParams = {
+  limit: number;
+  offset: number;
+  order: string;
+  desc: boolean;
+};
+
+export type SelectRentalsParams = SelectQueryParams & {
+  gameId: number;
+  customerId: number;
+};
+
+export interface GetRentalsRequest extends Express.Request {
+  query: SelectRentalsParams;
+}
+
 export interface GetRequest extends Express.Request {
-  query: {
-    limit: number;
-    offset: number;
-    order: string;
-    desc: boolean;
-  };
+  query: SelectQueryParams;
 }
 
 export interface ParamsIdRequest extends Express.Request {
@@ -54,15 +65,4 @@ export interface ParamsIdRequest extends Express.Request {
 
 export interface PutCustomerRequest extends ParamsIdRequest {
   body: Customer;
-}
-
-export interface GetRentalsRequest extends Express.Request {
-  query: {
-    gameId: number;
-    customerId: number;
-    offset: number;
-    limit: number;
-    order: string;
-    desc: boolean;
-  };
 }

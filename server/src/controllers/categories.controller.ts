@@ -1,11 +1,17 @@
 import { Response } from "express";
-import { Category, GetRequest, TypedBodyRequest } from "../global/types";
+import {
+  Category,
+  GetRequest,
+  SelectQueryParams,
+  TypedBodyRequest,
+} from "../global/types";
 import { insertCategory, selectCategories } from "../services/categories.service";
 
 const getCategories = async (req: GetRequest, res: Response) => {
   try {
-    const { offset, limit, desc, order } = req.query;
-    const categories = await selectCategories(offset, limit, order, desc);
+    const selectQueryArgs: SelectQueryParams = req.query;
+    const categories = await selectCategories(selectQueryArgs);
+
     res.status(200).send(categories);
   } catch (err) {
     res.status(500).send({

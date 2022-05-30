@@ -1,8 +1,8 @@
 import * as db from "../repositories/games.repository";
-import { Game } from "../global/types";
+import { Game, SelectQueryParams } from "../global/types";
 
-const selectGames = async (offset: number, limit: number, order: string, desc: boolean) =>
-  db.selectGames(offset, limit, order, desc);
+const selectGames = async (selectQueryArgs: SelectQueryParams) =>
+  db.selectGames(selectQueryArgs);
 
 const insertGame = async (game: Game) => {
   const rows = await db.selectGameByName(game.name);

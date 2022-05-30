@@ -1,17 +1,10 @@
-import { BaseRental, Rental } from "../global/types";
+import { BaseRental, Rental, SelectRentalsParams } from "../global/types";
 import { selectCustomerById } from "../repositories/customers.repository";
 import { selectGameById } from "../repositories/games.repository";
 import * as db from "../repositories/rentals.repository";
 
-const formatSelectRentals = async (
-  customerId: number,
-  gameId: number,
-  offset: number,
-  limit: number,
-  order: string,
-  desc: boolean
-) => {
-  const rentals = await db.selectRentals(customerId, gameId, offset, limit, order, desc);
+const formatSelectedRentals = async (selectRentalsArgs: SelectRentalsParams) => {
+  const rentals = await db.selectRentals(selectRentalsArgs);
 
   return rentals.map((eachRental) => {
     const { customerName, gameName, categoryId, categoryName, ...rentalInfo } =
@@ -65,9 +58,13 @@ const insertRental = async (rentalInfo: BaseRental) => {
 
 const returnRental = async (rentalId: number, rental: Rental) => {
   rental.returnDate = new Date();
-  const daysLate = Math.floor(
-    (rental.returnDate.getTime() - rental.rentDate.getTime()) / (1000 * 3600 * 24) -
-      rental.daysRented
+
+  const daysLate = Math.min(
+    Math.floor(
+      (rental.returnDate.getTime() - rental.rentDate.getTime()) / (1000 * 3600 * 24) -
+        rental.daysRented
+    ),
+    0
   );
 
   const game = await selectGameById(rental.gameId);
@@ -81,7 +78,7 @@ const deleteRentalById = async (rentalId: number) => {
 };
 
 export {
-  formatSelectRentals,
+  formatSelectedRentals,
   customerAndGameExist,
   rentalExists,
   insertRental,

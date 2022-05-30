@@ -3,31 +3,26 @@ import {
   BaseRental,
   GetRentalsRequest,
   ParamsIdRequest,
+  Rental,
+  SelectRentalsParams,
   TypedBodyRequest,
 } from "../global/types";
 import {
   customerAndGameExist,
   deleteRentalById,
-  formatSelectRentals,
+  formatSelectedRentals,
   insertRental,
   rentalExists,
   returnRental,
 } from "../services/rentals.service";
 
 const getRentals = async (req: GetRentalsRequest, res: Response) => {
-  const { customerId, gameId, offset, limit, order, desc } = req.query;
   try {
-    const rentalsData = await formatSelectRentals(
-      customerId,
-      gameId,
-      offset,
-      limit,
-      order,
-      desc
-    );
+    const selectRentalsArgs: SelectRentalsParams = req.query;
+    const rentalsData = await formatSelectedRentals(selectRentalsArgs);
+
     res.status(200).send(rentalsData);
   } catch (err) {
-    console.log(err);
     res.status(500).send({
       message: "Internal error while getting rentals",
       detail: err,
@@ -55,7 +50,8 @@ const postRental = async (req: TypedBodyRequest<BaseRental>, res: Response) => {
 const postReturnRental = async (req: ParamsIdRequest, res: Response) => {
   try {
     const { id } = req.params;
-    const rental = await rentalExists(id);
+    const rental: Rental = await rentalExists(id);
+
     if (!rental) return res.status(404).send({ error: `Rental ${id} not found` });
     if (rental.returnDate)
       return res.status(400).send({ error: `Rental ${id} has already been returned` });

@@ -1,13 +1,10 @@
 import database from "../db";
 import { propertyExistsInType } from "../global/typeCheck";
-import { Game } from "../global/types";
+import { Game, SelectQueryParams } from "../global/types";
 
-const selectGames = async (
-  offset: number,
-  limit: number,
-  order: string,
-  desc: boolean
-) => {
+const selectGames = async (selectQueryArgs: SelectQueryParams) => {
+  let { offset, limit, order, desc } = selectQueryArgs;
+
   if (!propertyExistsInType(order, "Game")) order = "id";
 
   const { rows } = await database.query(

@@ -1,12 +1,8 @@
-import { Category } from "../global/types";
+import { Category, SelectQueryParams } from "../global/types";
 import * as db from "../repositories/categories.repository";
 
-const selectCategories = async (
-  offset: number,
-  limit: number,
-  order: string,
-  desc: boolean
-) => db.selectCategories(offset, limit, order, desc);
+const selectCategories = async (selectQueryArgs: SelectQueryParams) =>
+  db.selectCategories(selectQueryArgs);
 
 const categoryAlreadyExists = async (id: number) => {
   const rows = await db.selectCategoryById(id);
