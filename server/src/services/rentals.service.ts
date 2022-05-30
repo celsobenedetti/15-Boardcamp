@@ -7,9 +7,11 @@ const formatSelectRentals = async (
   customerId: number,
   gameId: number,
   offset: number,
-  limit: number
+  limit: number,
+  order: string,
+  desc: boolean
 ) => {
-  const rentals = await db.selectRentals(customerId, gameId, offset, limit);
+  const rentals = await db.selectRentals(customerId, gameId, offset, limit, order, desc);
 
   return rentals.map((eachRental) => {
     const { customerName, gameName, categoryId, categoryName, ...rentalInfo } =

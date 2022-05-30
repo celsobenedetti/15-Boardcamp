@@ -1,5 +1,7 @@
 import database from "../db";
-import { Category } from "../global/types";
+import { Category, propertyExistsInType } from "../global/types";
+
+const categoryExample: Category = { name: "" };
 
 const selectCategories = async (
   offset: number,
@@ -7,8 +9,10 @@ const selectCategories = async (
   order: string,
   desc: boolean
 ) => {
+  order = propertyExistsInType(order, categoryExample) ? order : "id";
+
   const { rows } = await database.query(
-    `SELECT * FROM categories ORDER BY ${order ? order : "id"} ${
+    `SELECT * FROM categories ORDER BY "${order}" ${
       desc ? "DESC" : ""
     } OFFSET $1 LIMIT $2 ;`,
     [offset, limit]

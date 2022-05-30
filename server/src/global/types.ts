@@ -27,11 +27,16 @@ export type Rental = {
   customerId: number;
   gameId: number;
   rentDate: Date;
-  daysRented: 3;
+  daysRented: number;
   returnDate: Date | null;
   originalPrice: number;
   delayFee: number | null;
 };
+
+export function propertyExistsInType<T>(property: string, type: T) {
+  if (!property) return false;
+  return property in type;
+}
 
 export interface TypedBodyRequest<T> extends Express.Request {
   body: T;
@@ -62,5 +67,7 @@ export interface GetRentalsRequest extends Express.Request {
     customerId: number;
     offset: number;
     limit: number;
+    order: string;
+    desc: boolean;
   };
 }

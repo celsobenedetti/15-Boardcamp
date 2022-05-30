@@ -1,5 +1,12 @@
 import database from "../db";
-import { Customer } from "../global/types";
+import { Customer, propertyExistsInType } from "../global/types";
+
+const customerExample: Customer = {
+  name: "",
+  phone: "",
+  cpf: "",
+  birthday: new Date(),
+};
 
 const selectCustomers = async (
   offset: number,
@@ -7,8 +14,10 @@ const selectCustomers = async (
   order: string,
   desc: boolean
 ) => {
+  order = propertyExistsInType(order, customerExample) ? order : "id";
+
   const { rows } = await database.query(
-    `SELECT * FROM customers ORDER BY ${order ? order : "id"} ${
+    `SELECT * FROM customers ORDER BY "${order}" ${
       desc ? "DESC" : ""
     } OFFSET $1 LIMIT $2;`,
     [offset, limit]
@@ -33,7 +42,6 @@ const selectCpfInOtherCustomers = async (customerId: number, cpf: string) => {
     "SELECT * FROM CUSTOMERS WHERE cpf = $1 AND id != $2;",
     [cpf, customerId]
   );
-  console.log(rows);
   return rows[0];
 };
 

@@ -28,7 +28,6 @@ const postGame = async (req: TypedBodyRequest<Game>, res: Response) => {
 
     res.sendStatus(201);
   } catch (err) {
-    console.log(err);
     res.status(500).send({
       message: "Internal error while posting game",
       detail: err,
