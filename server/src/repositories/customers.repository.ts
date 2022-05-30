@@ -1,6 +1,6 @@
 import database from "../db";
-import { propertyExistsInType } from "../global/utils/typeCheck";
 import { Customer, SelectQueryParams } from "../global/types";
+import { propertyExistsInType } from "../global/utils/typeCheck";
 
 const selectCustomers = async (selectQueryArgs: SelectQueryParams) => {
   let { offset, limit, order, desc } = selectQueryArgs;

@@ -1,7 +1,7 @@
 import { Router } from "express";
 import {
-  getCustomers,
   getCustomerById,
+  getCustomers,
   postCustomer,
   putCustomer,
 } from "../controllers/customers.controller";

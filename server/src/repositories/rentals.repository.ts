@@ -1,7 +1,7 @@
 import database from "../db";
-import { propertyExistsInType } from "../global/utils/typeCheck";
 import { Rental, SelectRentalsParams } from "../global/types";
 import { validateDate } from "../global/utils/isValidDate";
+import { propertyExistsInType } from "../global/utils/typeCheck";
 
 const selectRentals = async (selectRentalsArgs: SelectRentalsParams) => {
   let { customerId, gameId, offset, limit, order, desc, status, startDate } =

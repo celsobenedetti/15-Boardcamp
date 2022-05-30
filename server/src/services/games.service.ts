@@ -1,5 +1,5 @@
-import * as db from "../repositories/games.repository";
 import { Game, SelectQueryParams } from "../global/types";
+import * as db from "../repositories/games.repository";
 
 const selectGames = async (selectQueryArgs: SelectQueryParams) =>
   db.selectGames(selectQueryArgs);
