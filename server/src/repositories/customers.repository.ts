@@ -14,7 +14,7 @@ const selectCustomers = async (
   order: string,
   desc: boolean
 ) => {
-  order = propertyExistsInType(order, customerExample) ? order : "id";
+  if (!propertyExistsInType(order, customerExample)) order = "id";
 
   const { rows } = await database.query(
     `SELECT * FROM customers ORDER BY "${order}" ${

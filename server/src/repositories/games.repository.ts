@@ -15,7 +15,7 @@ const selectGames = async (
   order: string,
   desc: boolean
 ) => {
-  order = propertyExistsInType(order, gameExample) ? order : "id";
+  if (!propertyExistsInType(order, gameExample)) order = "id";
 
   const { rows } = await database.query(
     `SELECT * FROM games ORDER BY "${order}" ${desc ? "DESC" : ""} OFFSET $1 LIMIT $2;`,

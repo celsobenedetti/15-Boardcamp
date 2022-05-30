@@ -19,7 +19,7 @@ const selectRentals = async (
   order: string,
   desc: boolean
 ) => {
-  order = propertyExistsInType(order, rentalExample) ? order : "id";
+  if (!propertyExistsInType(order, rentalExample)) order = "id";
 
   const { rows } = await database.query(
     `SELECT rentals.*, customers.name as "customerName", games.name as "gameName",  

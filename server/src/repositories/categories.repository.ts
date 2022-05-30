@@ -9,7 +9,7 @@ const selectCategories = async (
   order: string,
   desc: boolean
 ) => {
-  order = propertyExistsInType(order, categoryExample) ? order : "id";
+  if (!propertyExistsInType(order, categoryExample)) order = "id";
 
   const { rows } = await database.query(
     `SELECT * FROM categories ORDER BY "${order}" ${
