@@ -3,10 +3,17 @@ import { selectCustomerById } from "../repositories/customers.repository";
 import { selectGameById } from "../repositories/games.repository";
 import * as db from "../repositories/rentals.repository";
 
-const formatSelectedRentals = async (selectRentalsArgs: SelectRentalsParams) => {
-  const rentals = await db.selectRentals(selectRentalsArgs);
+interface RentalQueryResult extends Rental {
+  customerName: string;
+  gameName: string;
+  categoryName: string;
+  categoryId: number;
+}
 
-  return rentals.map((eachRental) => {
+const formatSelectedRentals = async (selectRentalsArgs: SelectRentalsParams) => {
+  const rentals: RentalQueryResult[] = await db.selectRentals(selectRentalsArgs);
+
+  return rentals.map((eachRental: RentalQueryResult) => {
     const { customerName, gameName, categoryId, categoryName, ...rentalInfo } =
       eachRental;
 
