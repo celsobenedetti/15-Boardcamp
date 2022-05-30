@@ -30,12 +30,11 @@ const selectRentals = async (selectRentalsArgs: SelectRentalsParams) => {
           ? `AND rentals."returnDate" IS ${statusOpen ? "NULL" : "NOT NULL"}`
           : ""
       }
-      AND rentals."rentDate" >= '${isValidDate ? startDate : "1900-01-01"}'::date
+      ${isValidDate ? `AND rentals."rentDate" >= '${startDate}'::date` : ""}
       ORDER BY rentals."${orderBy}" ${desc ? "DESC" : ""}
       OFFSET $3 LIMIT $4;`,
     [customerId, gameId, offset, limit]
   );
-  console.log(rows);
   return rows;
 };
 
