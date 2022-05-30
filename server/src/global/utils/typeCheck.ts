@@ -1,4 +1,4 @@
-import { Category, Customer, Game, Rental } from "./types";
+import { Category, Customer, Game, Rental } from "../types";
 
 const categoryExample: Category = { name: "" };
 

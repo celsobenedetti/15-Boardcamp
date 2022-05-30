@@ -1,7 +1,7 @@
 import database from "../db";
-import { propertyExistsInType } from "../global/typeCheck";
+import { propertyExistsInType } from "../global/utils/typeCheck";
 import { Rental, SelectRentalsParams } from "../global/types";
-import moment from "moment";
+import { validateDate } from "../global/utils/isValidDate";
 
 const selectRentals = async (selectRentalsArgs: SelectRentalsParams) => {
   let { customerId, gameId, offset, limit, order, desc, status, startDate } =
@@ -9,7 +9,7 @@ const selectRentals = async (selectRentalsArgs: SelectRentalsParams) => {
 
   const statusExists = status && (status === "open" || status === "closed");
   const statusOpen = status === "open";
-  const isValidDate = moment(startDate, "YYYY-MM-DD", true).isValid();
+  const isValidDate = validateDate(startDate);
 
   if (!propertyExistsInType(order, "Rental")) order = "id";
 

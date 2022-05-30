@@ -1,6 +1,6 @@
 import database from "../db";
-import { propertyExistsInType } from "../global/typeCheck";
 import { Game, SelectQueryParams } from "../global/types";
+import { propertyExistsInType } from "../global/utils/typeCheck";
 
 const selectGames = async (selectQueryArgs: SelectQueryParams) => {
   let { offset, limit, order, desc } = selectQueryArgs;

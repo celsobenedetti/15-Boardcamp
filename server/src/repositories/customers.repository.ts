@@ -1,5 +1,5 @@
 import database from "../db";
-import { propertyExistsInType } from "../global/typeCheck";
+import { propertyExistsInType } from "../global/utils/typeCheck";
 import { Customer, SelectQueryParams } from "../global/types";
 
 const selectCustomers = async (selectQueryArgs: SelectQueryParams) => {
