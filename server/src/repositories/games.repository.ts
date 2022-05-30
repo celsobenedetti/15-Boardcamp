@@ -3,12 +3,12 @@ import { Game, SelectQueryParams } from "../global/types";
 import { propertyExistsInType } from "../global/utils/typeCheck";
 
 const selectGames = async (selectQueryArgs: SelectQueryParams) => {
-  let { offset, limit, order, desc } = selectQueryArgs;
+  const { offset, limit, order, desc } = selectQueryArgs;
 
-  if (!propertyExistsInType(order, "Game")) order = "id";
+  const orderBy = !propertyExistsInType(order, "Game") ? order : "id";
 
   const { rows } = await database.query(
-    `SELECT * FROM games ORDER BY "${order}" ${desc ? "DESC" : ""} OFFSET $1 LIMIT $2;`,
+    `SELECT * FROM games ORDER BY "${orderBy}" ${desc ? "DESC" : ""} OFFSET $1 LIMIT $2;`,
     [offset, limit]
   );
   return rows;

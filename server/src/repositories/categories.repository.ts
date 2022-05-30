@@ -3,12 +3,12 @@ import { Category, SelectQueryParams } from "../global/types";
 import { propertyExistsInType } from "../global/utils/typeCheck";
 
 const selectCategories = async (selectQueryArgs: SelectQueryParams) => {
-  let { offset, limit, order, desc } = selectQueryArgs;
+  const { offset, limit, order, desc } = selectQueryArgs;
 
-  if (!propertyExistsInType(order, "Category")) order = "id";
+  const orderBy = !propertyExistsInType(order, "Category") ? order : "id";
 
   const { rows } = await database.query(
-    `SELECT * FROM categories ORDER BY "${order}" ${
+    `SELECT * FROM categories ORDER BY "${orderBy}" ${
       desc ? "DESC" : ""
     } OFFSET $1 LIMIT $2 ;`,
     [offset, limit]
