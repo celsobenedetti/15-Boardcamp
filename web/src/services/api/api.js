@@ -13,7 +13,7 @@ const queryStringBuilder = (query) =>
     : "";
 
 const instance = axios.create({
-  baseURL: "https://boardcamp-celso.herokuapp.com/customers",
+  baseURL: "https://boardcamp-celso.herokuapp.com",
 });
 
 for (const method of methods) {
