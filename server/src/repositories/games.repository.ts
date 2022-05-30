@@ -5,10 +5,13 @@ import { propertyExistsInType } from "../global/utils/typeCheck";
 const selectGames = async (selectQueryArgs: SelectQueryParams) => {
   const { offset, limit, order, desc } = selectQueryArgs;
 
-  const orderBy = !propertyExistsInType(order, "Game") ? order : "id";
+  const orderBy = propertyExistsInType(order, "Game") ? order : "id";
 
   const { rows } = await database.query(
-    `SELECT * FROM games ORDER BY "${orderBy}" ${desc ? "DESC" : ""} OFFSET $1 LIMIT $2;`,
+    `SELECT games.*, COUNT(rentals."gameId") AS "rentalCount"
+    FROM games LEFT JOIN rentals on games.id = rentals."gameId"
+    GROUP BY games.id ORDER BY "${orderBy}" ${desc ? "DESC" : ""} 
+    OFFSET $1 LIMIT $2;`,
     [offset, limit]
   );
   return rows;

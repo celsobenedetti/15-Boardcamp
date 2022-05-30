@@ -5,7 +5,7 @@ import { propertyExistsInType } from "../global/utils/typeCheck";
 const selectCategories = async (selectQueryArgs: SelectQueryParams) => {
   const { offset, limit, order, desc } = selectQueryArgs;
 
-  const orderBy = !propertyExistsInType(order, "Category") ? order : "id";
+  const orderBy = propertyExistsInType(order, "Category") ? order : "id";
 
   const { rows } = await database.query(
     `SELECT * FROM categories ORDER BY "${orderBy}" ${
