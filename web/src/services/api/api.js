@@ -1,18 +1,19 @@
-import axios from 'axios';
+import axios from "axios";
 
-const methods = [
-  'get',
-  'post',
-  'put',
-  'delete'
-];
+const methods = ["get", "post", "put", "delete"];
 
 const axiosWrapper = {};
 
-const queryStringBuilder = query => Object.keys(query).length ? '?' + Object.keys(query).map(k => `${k}=${query[k]}`).join('&') : '';
+const queryStringBuilder = (query) =>
+  Object.keys(query).length
+    ? "?" +
+      Object.keys(query)
+        .map((k) => `${k}=${query[k]}`)
+        .join("&")
+    : "";
 
 const instance = axios.create({
-  baseURL: 'http://localhost:4000'
+  baseURL: "https://boardcamp-celso.herokuapp.com/customers",
 });
 
 for (const method of methods) {
@@ -23,7 +24,7 @@ for (const method of methods) {
       const request = await instance({
         method,
         url,
-        data: body
+        data: body,
       });
 
       return complete ? request : request.data;
@@ -31,7 +32,7 @@ for (const method of methods) {
       console.error(err);
       return Promise.reject(err.response);
     }
-  }
+  };
 }
 
 export default axiosWrapper;
