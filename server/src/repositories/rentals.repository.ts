@@ -1,15 +1,6 @@
 import database from "../db";
-import { propertyExistsInType, Rental } from "../global/types";
-
-const rentalExample: Rental = {
-  customerId: 0,
-  gameId: 0,
-  rentDate: new Date(),
-  daysRented: 0,
-  returnDate: new Date(),
-  originalPrice: 0,
-  delayFee: 0,
-};
+import { propertyExistsInType } from "../global/typeCheck";
+import { Rental } from "../global/types";
 
 const selectRentals = async (
   customerId: number,
@@ -19,7 +10,7 @@ const selectRentals = async (
   order: string,
   desc: boolean
 ) => {
-  if (!propertyExistsInType(order, rentalExample)) order = "id";
+  if (!propertyExistsInType(order, "Rental")) order = "id";
 
   const { rows } = await database.query(
     `SELECT rentals.*, customers.name as "customerName", games.name as "gameName",  

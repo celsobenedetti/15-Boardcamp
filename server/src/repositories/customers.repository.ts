@@ -1,12 +1,6 @@
 import database from "../db";
-import { Customer, propertyExistsInType } from "../global/types";
-
-const customerExample: Customer = {
-  name: "",
-  phone: "",
-  cpf: "",
-  birthday: new Date(),
-};
+import { propertyExistsInType } from "../global/typeCheck";
+import { Customer } from "../global/types";
 
 const selectCustomers = async (
   offset: number,
@@ -14,7 +8,7 @@ const selectCustomers = async (
   order: string,
   desc: boolean
 ) => {
-  if (!propertyExistsInType(order, customerExample)) order = "id";
+  if (!propertyExistsInType(order, "Customer")) order = "id";
 
   const { rows } = await database.query(
     `SELECT * FROM customers ORDER BY "${order}" ${

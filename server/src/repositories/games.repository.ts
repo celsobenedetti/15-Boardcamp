@@ -1,13 +1,6 @@
 import database from "../db";
-import { Game, propertyExistsInType } from "../global/types";
-
-const gameExample: Game = {
-  name: "",
-  image: "",
-  stockTotal: 0,
-  categoryId: 0,
-  pricePerDay: 0,
-};
+import { propertyExistsInType } from "../global/typeCheck";
+import { Game } from "../global/types";
 
 const selectGames = async (
   offset: number,
@@ -15,7 +8,7 @@ const selectGames = async (
   order: string,
   desc: boolean
 ) => {
-  if (!propertyExistsInType(order, gameExample)) order = "id";
+  if (!propertyExistsInType(order, "Game")) order = "id";
 
   const { rows } = await database.query(
     `SELECT * FROM games ORDER BY "${order}" ${desc ? "DESC" : ""} OFFSET $1 LIMIT $2;`,
