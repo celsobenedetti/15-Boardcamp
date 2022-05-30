@@ -4,7 +4,7 @@
  </div>
 
 <div align="center">
-  <a href="https://github.com/celso-patiri/15-Boardcamp" target="_blank">
+  <a href="https://boardcamp-celso.herokuapp.com/" target="_blank">
     <img src="https://github.com/celso-patiri/15-Boardcamp/blob/main/web/src/assets/images/logo.png" alt="Logo" width="200">
   </a>
   
