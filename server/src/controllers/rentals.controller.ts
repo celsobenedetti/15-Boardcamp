@@ -1,25 +1,24 @@
 import { Response } from "express";
 import {
   BaseRental,
-  GetRentalsRequest,
   ParamsIdRequest,
   Rental,
   RentalMetricsParams,
-  RentalsMetricsRequest,
   SelectRentalsParams,
   TypedBodyRequest,
+  TypedQueryRequest,
 } from "../global/types";
 import {
   customerAndGameExist,
   deleteRentalById,
+  formatRentalMetrics,
   formatSelectedRentals,
   insertRental,
   rentalExists,
   returnRental,
-  formatRentalMetrics,
 } from "../services/rentals.service";
 
-const getRentals = async (req: GetRentalsRequest, res: Response) => {
+const getRentals = async (req: TypedQueryRequest<SelectRentalsParams>, res: Response) => {
   try {
     const selectRentalsArgs: SelectRentalsParams = req.query;
     const rentalsData = await formatSelectedRentals(selectRentalsArgs);
@@ -33,7 +32,10 @@ const getRentals = async (req: GetRentalsRequest, res: Response) => {
   }
 };
 
-const getRentalsMetrics = async (req: RentalsMetricsRequest, res: Response) => {
+const getRentalsMetrics = async (
+  req: TypedQueryRequest<RentalMetricsParams>,
+  res: Response
+) => {
   try {
     const selectRentalsArgs: RentalMetricsParams = req.query;
     const rentalMetrics = await formatRentalMetrics(selectRentalsArgs);
