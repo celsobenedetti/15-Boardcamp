@@ -4,10 +4,10 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node ./dist/index.js",
+    "start": "node ./dist/server.js",
     "build": "tsc",
     "test": "jest --coverage --detectOpenHandles",
-    "dev": "ts-node-dev --respawn --pretty --transpile-only src/index.ts"
+    "dev": "ts-node-dev --respawn --pretty --transpile-only src/server.ts"
   },
   "engines": {
     "node": "18.2.0"

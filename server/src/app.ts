@@ -11,6 +11,7 @@ app.use(cors());
 app.use(helmet());
 app.use(json());
 
+app.get("/", (_req, res) => res.send("Hello from Boardcamp"));
 app.use("/categories", categoriesRouter);
 app.use("/games", gamesRouter);
 app.use("/customers", customersRouter);
