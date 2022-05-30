@@ -51,8 +51,22 @@ export interface SelectRentalsParams extends SelectQueryParams {
   startDate: Date;
 }
 
+export interface RentalMetricsParams {
+  startDate: Date;
+  endDate: Date;
+}
+
+export interface RentalMetricsResult {
+  revenue: number;
+  rentals: number;
+}
+
 export interface GetRentalsRequest extends Express.Request {
   query: SelectRentalsParams;
+}
+
+export interface RentalsMetricsRequest extends Express.Request {
+  query: RentalMetricsParams;
 }
 
 export interface GetRequest extends Express.Request {

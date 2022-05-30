@@ -1,17 +1,21 @@
 import database from "../db";
-import { Rental, SelectRentalsParams } from "../global/types";
+import {
+  Rental,
+  RentalMetricsParams,
+  RentalMetricsResult,
+  SelectRentalsParams,
+} from "../global/types";
 import { validateDate } from "../global/utils/isValidDate";
 import { propertyExistsInType } from "../global/utils/typeCheck";
 
 const selectRentals = async (selectRentalsArgs: SelectRentalsParams) => {
-  let { customerId, gameId, offset, limit, order, desc, status, startDate } =
+  const { customerId, gameId, offset, limit, order, desc, status, startDate } =
     selectRentalsArgs;
 
   const statusExists = status && (status === "open" || status === "closed");
   const statusOpen = status === "open";
   const isValidDate = validateDate(startDate);
-
-  if (!propertyExistsInType(order, "Rental")) order = "id";
+  const orderBy = propertyExistsInType(order, "Rental") ? order : "id";
 
   const { rows } = await database.query(
     `SELECT rentals.*, customers.name as "customerName", games.name as "gameName",  
@@ -21,15 +25,37 @@ const selectRentals = async (selectRentalsArgs: SelectRentalsParams) => {
       JOIN categories ON games."categoryId" = categories.id 
       WHERE customers.id = (CASE WHEN $1::INTEGER IS NULL THEN customers.id ELSE $1 END)
       AND games.id = (CASE WHEN $2::INTEGER IS NULL THEN games.id ELSE $2 END) 
-      AND rentals."returnDate" ${
-        !statusExists ? ' = rentals."returnDate"' : statusOpen ? "IS NULL" : "IS NOT NULL"
+      ${
+        statusExists
+          ? `AND rentals."returnDate" IS ${statusOpen ? "NULL" : "NOT NULL"}`
+          : ""
       }
       AND rentals."rentDate" >= '${isValidDate ? startDate : "1900-01-01"}'::date
-      ORDER BY rentals."${order}" ${desc ? "DESC" : ""}
+      ORDER BY rentals."${orderBy}" ${desc ? "DESC" : ""}
       OFFSET $3 LIMIT $4;`,
     [customerId, gameId, offset, limit]
   );
+  console.log(rows);
   return rows;
+};
+
+const selectRentalsMetrics = async (
+  rentalMetricsArgs: RentalMetricsParams
+): Promise<RentalMetricsResult> => {
+  const { startDate, endDate } = rentalMetricsArgs;
+
+  const isValidStartDate = validateDate(startDate);
+  const isValidEndDate = validateDate(endDate);
+
+  const { rows } = await database.query(
+    `SELECT SUM("originalPrice" + "delayFee") AS "revenue", COUNT(*) as "rentals"
+        FROM rentals
+        WHERE "returnDate" IS NOT NULL
+        AND "rentDate" >= '${isValidStartDate ? startDate : "1900-01-01"}'::date
+        AND "rentDate" <= '${isValidEndDate ? endDate : "2900-01-01"}'::date;`,
+    []
+  );
+  return rows[0];
 };
 
 const selectRentalById = async (rentalId: number): Promise<Rental> => {
@@ -71,4 +97,11 @@ const deleteRental = async (rentalId: number) => {
   await database.query("DELETE FROM rentals WHERE id = $1;", [rentalId]);
 };
 
-export { selectRentals, selectRentalById, insertRental, updateRental, deleteRental };
+export {
+  selectRentals,
+  selectRentalById,
+  insertRental,
+  updateRental,
+  deleteRental,
+  selectRentalsMetrics,
+};

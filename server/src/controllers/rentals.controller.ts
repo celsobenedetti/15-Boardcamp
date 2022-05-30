@@ -4,6 +4,8 @@ import {
   GetRentalsRequest,
   ParamsIdRequest,
   Rental,
+  RentalMetricsParams,
+  RentalsMetricsRequest,
   SelectRentalsParams,
   TypedBodyRequest,
 } from "../global/types";
@@ -14,6 +16,7 @@ import {
   insertRental,
   rentalExists,
   returnRental,
+  formatRentalMetrics,
 } from "../services/rentals.service";
 
 const getRentals = async (req: GetRentalsRequest, res: Response) => {
@@ -25,6 +28,20 @@ const getRentals = async (req: GetRentalsRequest, res: Response) => {
   } catch (err) {
     res.status(500).send({
       message: "Internal error while getting rentals",
+      detail: err,
+    });
+  }
+};
+
+const getRentalsMetrics = async (req: RentalsMetricsRequest, res: Response) => {
+  try {
+    const selectRentalsArgs: RentalMetricsParams = req.query;
+    const rentalMetrics = await formatRentalMetrics(selectRentalsArgs);
+
+    res.status(200).send(rentalMetrics);
+  } catch (err) {
+    res.status(500).send({
+      message: "Internal error while getting rentals metrics",
       detail: err,
     });
   }
@@ -88,4 +105,4 @@ const deleteRental = async (req: ParamsIdRequest, res: Response) => {
   }
 };
 
-export { getRentals, postRental, postReturnRental, deleteRental };
+export { getRentals, getRentalsMetrics, postRental, postReturnRental, deleteRental };

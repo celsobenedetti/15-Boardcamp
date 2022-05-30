@@ -28,7 +28,6 @@ const gameExample: Game = {
 };
 
 export function propertyExistsInType(property: string, type: string) {
-  if (!property) return false;
   if (type === "Category") return property in categoryExample;
   if (type === "Game") return property in gameExample;
   if (type === "Customer") return property in customerExample;

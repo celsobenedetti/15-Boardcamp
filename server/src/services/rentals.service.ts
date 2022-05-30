@@ -1,4 +1,10 @@
-import { BaseRental, Rental, SelectRentalsParams } from "../global/types";
+import {
+  BaseRental,
+  Rental,
+  RentalMetricsParams,
+  RentalMetricsResult,
+  SelectRentalsParams,
+} from "../global/types";
 import { selectCustomerById } from "../repositories/customers.repository";
 import { selectGameById } from "../repositories/games.repository";
 import * as db from "../repositories/rentals.repository";
@@ -31,6 +37,14 @@ const formatSelectedRentals = async (selectRentalsArgs: SelectRentalsParams) => 
       },
     };
   });
+};
+
+const formatRentalMetrics = async (rentalMetricsArgs: RentalMetricsParams) => {
+  const metrics: RentalMetricsResult = await db.selectRentalsMetrics(rentalMetricsArgs);
+  return {
+    ...metrics,
+    average: Math.floor(metrics.revenue / metrics.rentals),
+  };
 };
 
 const customerAndGameExist = async (customerId: number, gameId: number) => {
@@ -66,7 +80,7 @@ const insertRental = async (rentalInfo: BaseRental) => {
 const returnRental = async (rentalId: number, rental: Rental) => {
   rental.returnDate = new Date();
 
-  const daysLate = Math.min(
+  const daysLate = Math.max(
     Math.floor(
       (rental.returnDate.getTime() - rental.rentDate.getTime()) / (1000 * 3600 * 24) -
         rental.daysRented
@@ -91,4 +105,5 @@ export {
   insertRental,
   returnRental,
   deleteRentalById,
+  formatRentalMetrics,
 };
