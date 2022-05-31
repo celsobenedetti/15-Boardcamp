@@ -87,57 +87,57 @@
 
     </details>
 
-- [x] **GET** `/rentals`
-  - **Response:** lista com todos os aluguéis, contendo o `customer` e o `game` do aluguel em questão em cada aluguel
-    ```jsx
-    [
-      {
-        id: 1,
-        customerId: 1,
-        gameId: 1,
-        rentDate: "2021-06-20",
-        daysRented: 3,
-        returnDate: null, // troca pra uma data quando já devolvido
-        originalPrice: 4500,
-        delayFee: null,
-        customer: {
-          id: 1,
-          name: "João Alfredo",
-        },
-        game: {
-          id: 1,
-          name: "Banco Imobiliário",
-          categoryId: 1,
-          categoryName: "Estratégia",
-        },
-      },
-    ];
-    ```
-  - **Regras de Negócio**
-    - [x] Caso seja passado um parâmetro `customerId` na **query string** da requisição, os aluguéis devem ser filtrados para retornar somente os do cliente solicitado. Exemplo:
-      - Para a rota `/rentals?customerId=1`, deve ser retornado uma array somente com os aluguéis do cliente com id 1
-    - [x] Caso seja passado um parâmetro `gameId` na **query string** da requisição, os aluguéis devem ser filtrados para retornar somente os do jogo solicitado. Exemplo:
-      - Para a rota `/rentals?gameId=1`, deve ser retornado uma array somente com os aluguéis do jogo com id 1
-- [x] **POST** `/rentals`
-  - **Regras de Negócio**
-    - [x] Ao inserir um aluguel, os campos `rentDate` e `originalPrice` devem ser populados automaticamente antes de salvá-lo:
-      - `rentDate`: data atual no momento da inserção
-      - `originalPrice`: `daysRented` multiplicado pelo preço por dia do jogo no momento da inserção
-    - [x] Ao inserir um aluguel, os campos `returnDate` e `delayFee` devem sempre começar como `null`
-    - [x] Ao inserir um aluguel, deve verificar se `customerId` se refere a um cliente existente. Se não, deve responder com **status 400**
-    - [x] Ao inserir um aluguel, deve verificar se `gameId` se refere a um jogo existente. Se não, deve responder com **status 400**
-    - [x] `daysRented` deve ser um número maior que 0. Se não, deve responder com **status 400**
-    - [x] Ao inserir um aluguel, deve-se validar que existem jogos disponíveis, ou seja, que não tem alugueis em aberto acima da quantidade de jogos em estoque. Caso contrário, deve retornar **status 400**
-- [x] **POST** `/rentals/:id/return`
-  - **Regras de Negócio**
-    - [x] Ao retornar um aluguel, o campo `returnDate` deve ser populado com a data atual do momento do retorno
-    - [x] Ao retornar um aluguel, o campo `delayFee` deve ser automaticamente populado com um valor equivalente ao número de dias de atraso vezes o preço por dia do jogo no momento do retorno.
-    - [x] Ao retornar um aluguel, deve verificar se o `id` do aluguel fornecido existe. Se não, deve responder com **status 404**
-    - [x] Ao retornar um aluguel, deve verificar se o aluguel já não está finalizado. Se estiver, deve responder com **status 400**
-- [x] **DELETE** `/rentals/:id`
-  - **Regras de Negócio**
-    - [x] Ao excluir um aluguel, deve verificar se o `id` fornecido existe. Se não, deve responder com **status 404**
-    - [x] Ao excluir um aluguel, deve verificar se o aluguel já não está finalizado (ou seja, `returnDate` já está preenchido). Se estiver, deve responder com **status 400**
+    - [x] **GET** `/rentals`
+      - **Response:** lista com todos os aluguéis, contendo o `customer` e o `game` do aluguel em questão em cada aluguel
+        ```jsx
+        [
+          {
+            id: 1,
+            customerId: 1,
+            gameId: 1,
+            rentDate: "2021-06-20",
+            daysRented: 3,
+            returnDate: null, // troca pra uma data quando já devolvido
+            originalPrice: 4500,
+            delayFee: null,
+            customer: {
+              id: 1,
+              name: "João Alfredo",
+            },
+            game: {
+              id: 1,
+              name: "Banco Imobiliário",
+              categoryId: 1,
+              categoryName: "Estratégia",
+            },
+          },
+        ];
+        ```
+      - **Regras de Negócio**
+        - [x] Caso seja passado um parâmetro `customerId` na **query string** da requisição, os aluguéis devem ser filtrados para retornar somente os do cliente solicitado. Exemplo:
+          - Para a rota `/rentals?customerId=1`, deve ser retornado uma array somente com os aluguéis do cliente com id 1
+        - [x] Caso seja passado um parâmetro `gameId` na **query string** da requisição, os aluguéis devem ser filtrados para retornar somente os do jogo solicitado. Exemplo:
+          - Para a rota `/rentals?gameId=1`, deve ser retornado uma array somente com os aluguéis do jogo com id 1
+    - [x] **POST** `/rentals`
+      - **Regras de Negócio**
+        - [x] Ao inserir um aluguel, os campos `rentDate` e `originalPrice` devem ser populados automaticamente antes de salvá-lo:
+          - `rentDate`: data atual no momento da inserção
+          - `originalPrice`: `daysRented` multiplicado pelo preço por dia do jogo no momento da inserção
+        - [x] Ao inserir um aluguel, os campos `returnDate` e `delayFee` devem sempre começar como `null`
+        - [x] Ao inserir um aluguel, deve verificar se `customerId` se refere a um cliente existente. Se não, deve responder com **status 400**
+        - [x] Ao inserir um aluguel, deve verificar se `gameId` se refere a um jogo existente. Se não, deve responder com **status 400**
+        - [x] `daysRented` deve ser um número maior que 0. Se não, deve responder com **status 400**
+        - [x] Ao inserir um aluguel, deve-se validar que existem jogos disponíveis, ou seja, que não tem alugueis em aberto acima da quantidade de jogos em estoque. Caso contrário, deve retornar **status 400**
+    - [x] **POST** `/rentals/:id/return`
+      - **Regras de Negócio**
+        - [x] Ao retornar um aluguel, o campo `returnDate` deve ser populado com a data atual do momento do retorno
+        - [x] Ao retornar um aluguel, o campo `delayFee` deve ser automaticamente populado com um valor equivalente ao número de dias de atraso vezes o preço por dia do jogo no momento do retorno.
+        - [x] Ao retornar um aluguel, deve verificar se o `id` do aluguel fornecido existe. Se não, deve responder com **status 404**
+        - [x] Ao retornar um aluguel, deve verificar se o aluguel já não está finalizado. Se estiver, deve responder com **status 400**
+    - [x] **DELETE** `/rentals/:id`
+      - **Regras de Negócio**
+        - [x] Ao excluir um aluguel, deve verificar se o `id` fornecido existe. Se não, deve responder com **status 404**
+        - [x] Ao excluir um aluguel, deve verificar se o aluguel já não está finalizado (ou seja, `returnDate` já está preenchido). Se estiver, deve responder com **status 400**
 
 ## ☑️ Bônus
 
