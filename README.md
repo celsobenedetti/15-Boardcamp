@@ -4,7 +4,7 @@
  </div>
 
 <div align="center">
-  <a href="https://github.com/celso-patiri/15-Boardcamp" target="_blank">
+  <a href="https://boardcamp-celso.herokuapp.com/" target="_blank">
     <img src="https://github.com/celso-patiri/15-Boardcamp/blob/main/web/src/assets/images/logo.png" alt="Logo" width="200">
   </a>
   
@@ -22,8 +22,8 @@
   ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
   
   ![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
-  ![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)
-  ![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+  <a href="https://boardcamp-celso.herokuapp.com/" target="_blank">![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)</a>
+   <a href="https://15-boardcamp.vercel.app/rentals" target="_blank">![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)</a>  
   
  </div>
 
