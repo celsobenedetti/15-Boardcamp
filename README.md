@@ -20,11 +20,8 @@
   ![Express.js](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
   ![Postgres](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
   ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-  
   ![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
-  <a href="https://boardcamp-celso.herokuapp.com/" target="_blank">![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)</a>
-   <a href="https://15-boardcamp.vercel.app/rentals" target="_blank">![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)</a>  
-  
+ 
  </div>
 
 ## ✅ Requirements
@@ -192,3 +189,10 @@
    ```jsx
    DATABASE_URL=postgres://role:password@localhost:5432/boardcamp
    ```
+   
+---
+
+
+  <a href="https://boardcamp-celso.herokuapp.com/" target="_blank">![Heroku](https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white)</a>
+   <a href="https://15-boardcamp.vercel.app/rentals" target="_blank">![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)</a>  
+  
